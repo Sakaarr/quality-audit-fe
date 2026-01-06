@@ -30,21 +30,21 @@ export const UploadSection: React.FC<UploadSectionProps> = ({
     e.stopPropagation();
   };
 
-  const handleDragEnter = (e: React.DragEvent, key: string) => {
+  const handleDragEnter = (e: React.DragEvent, key: FileKey) => {
     e.preventDefault();
     e.stopPropagation();
     const card = e.currentTarget as HTMLElement;
     card.classList.add("drag-over");
   };
 
-  const handleDragLeave = (e: React.DragEvent, key: string) => {
+  const handleDragLeave = (e: React.DragEvent, key: FileKey) => {
     e.preventDefault();
     e.stopPropagation();
     const card = e.currentTarget as HTMLElement;
     card.classList.remove("drag-over");
   };
 
-  const handleDrop = (e: React.DragEvent, key: string) => {
+  const handleDrop = (e: React.DragEvent, key: FileKey) => {
     e.preventDefault();
     e.stopPropagation();
     const card = e.currentTarget as HTMLElement;
