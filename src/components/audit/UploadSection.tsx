@@ -6,12 +6,7 @@
 import React from "react";
 import { FileUpload } from "@/components/common/FileUpload";
 import { FileType, FileKey, UploadedFile } from "@/types";
-
-interface UploadSectionProps {
-  fileType: FileType;
-  files: Partial<Record<FileKey, UploadedFile | null>>;
-  onFileSelect: (key: FileKey, file: File) => void;
-}
+import { useAuditStore } from "@/hooks/useAuditStore";
 
 const UPLOAD_CARDS = [
   { key: "ce1" as FileKey, label: "CE1 Document", icon: "📋" },
@@ -20,11 +15,18 @@ const UPLOAD_CARDS = [
   { key: "rw" as FileKey, label: "RW Document", icon: "📄" },
 ];
 
-export const UploadSection: React.FC<UploadSectionProps> = ({
-  fileType,
-  files,
-  onFileSelect,
-}) => {
+export const UploadSection: React.FC = () => {
+  const { currentFileType, files, setFile } = useAuditStore();
+  
+  const handleFileSelect = (key: FileKey, file: File) => {
+      setFile(key, {
+        name: file.name,
+        size: file.size,
+        type: currentFileType,
+        file,
+      });
+  };
+
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -56,13 +58,13 @@ export const UploadSection: React.FC<UploadSectionProps> = ({
     if (droppedFiles.length > 0) {
       const file = droppedFiles[0];
       // Validate file extension
-      const expectedExt = fileType === "pdf" ? ".pdf" : ".docx";
+      const expectedExt = currentFileType === "pdf" ? ".pdf" : ".docx";
       const fileExt = file.name.toLowerCase().endsWith(expectedExt);
 
       if (fileExt) {
-        onFileSelect(key, file);
+        handleFileSelect(key, file);
       } else {
-        alert(`Please upload a ${fileType.toUpperCase()} file.`);
+        alert(`Please upload a ${currentFileType.toUpperCase()} file.`);
       }
     }
   };
@@ -90,7 +92,7 @@ export const UploadSection: React.FC<UploadSectionProps> = ({
       document.removeEventListener("dragleave", handleDocumentDragOver);
       document.removeEventListener("drop", handleDocumentDrop);
     };
-  }, []);
+  }, [currentFileType]); // Added dependency on fileType for the alert message context if needed, though strictly drag/drop logic is generic.
 
   return (
     <section className="upload-section">
@@ -119,18 +121,18 @@ export const UploadSection: React.FC<UploadSectionProps> = ({
               </div>
               <h3>{label}</h3>
               <p className="file-name">
-                {files[key] ? files[key].name : "No file selected"}
+                {files[key] ? files[key]?.name : "No file selected"}
               </p>
             </div>
             <input
               type="file"
               id={`${key}File`}
-              accept={fileType === "pdf" ? ".pdf" : ".docx"}
+              accept={currentFileType === "pdf" ? ".pdf" : ".docx"}
               className="file-input"
               onChange={(e) => {
                 const files = e.target.files;
                 if (files && files.length > 0) {
-                  onFileSelect(key, files[0]);
+                  handleFileSelect(key, files[0]);
                 }
               }}
             />

@@ -10,5 +10,5 @@ export { FileUpload } from "@/components/common/FileUpload";
 
 // Audit components
 export { UploadSection } from "@/components/audit/UploadSection";
-export { ResultsTable } from "@/components/audit/ResultsTable";
+export { AuditTable } from "@/components/audit/AuditTable";
 
