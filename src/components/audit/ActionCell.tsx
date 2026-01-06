@@ -13,13 +13,8 @@ export const ActionCell: React.FC<ActionCellProps> = ({
   onRunTask,
   isComparison = false,
 }) => {
-  if (isComparison) {
-    return (
-      <td className="action-cell">
-        <span style={{ color: "#aaa" }}>-</span>
-      </td>
-    );
-  }
+  // Removed isComparison check to allow running comparison tasks
+
 
   if (isLoading) {
       return (
