@@ -53,9 +53,22 @@ export const AuditTable: React.FC = () => {
               </td>
               {(["ce1", "ce2", "ce3", "rw"] as FileKey[]).map((key) => (
                 <td key={key} id={`report-${key}`} className="result-cell">
-                  <button className="sm-btn" onClick={() => generateReport(key)}>
-                    Gen
-                  </button>
+                  <div style={{ display: 'flex', gap: '4px', justifyContent: 'center' }}>
+                    <button 
+                      className="sm-btn" 
+                      onClick={() => generateReport(key, 'view')}
+                      title="View in Browser"
+                    >
+                      View
+                    </button>
+                    <button 
+                      className="sm-btn" 
+                      onClick={() => generateReport(key, 'download')}
+                      title="Download HTML"
+                    >
+                      <i className="ph ph-download-simple"></i>
+                    </button>
+                  </div>
                 </td>
               ))}
               <td className="action-cell">

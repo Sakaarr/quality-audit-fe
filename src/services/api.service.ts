@@ -43,6 +43,32 @@ class ApiService {
   }
 
   /**
+   * Run a comparison task with multiple files
+   */
+  async runComparisonTask(
+    files: Record<string, File>,
+    taskKey: string,
+    fileType: FileType
+  ): Promise<Record<string, unknown>> {
+    try {
+      const endpoint = this.getEndpoint(taskKey, fileType);
+      const formData = new FormData();
+      
+      Object.entries(files).forEach(([key, file]) => {
+          formData.append(key, file);
+      });
+
+      const response = await this.axiosInstance.post(endpoint, formData);
+      return response.data;
+    } catch (error) {
+       if (axios.isAxiosError(error)) {
+        throw new Error(error.response?.data?.message || error.message);
+      }
+      throw error;
+    }
+  }
+
+  /**
    * Run validation on multiple files at once
    */
   async runMultipleValidations(
@@ -72,15 +98,13 @@ class ApiService {
   async generateReport(
     file: File,
     fileType: FileType
-  ): Promise<Blob> {
+  ): Promise<string> {
     try {
-      const endpoint = fileType === "pdf" ? "/pdf/generate-report/" : "/docx/generate-report/";
+      const endpoint = "/report/generate/";
       const formData = new FormData();
       formData.append("file", file);
 
-      const response = await this.axiosInstance.post(endpoint, formData, {
-        responseType: "blob",
-      });
+      const response = await this.axiosInstance.post(endpoint, formData);
 
       return response.data;
     } catch (error) {
@@ -108,6 +132,8 @@ class ApiService {
       "code-validation": "codeValidation",
       "accessibility-validation": "accessibilityValidation",
       "figure-placement": "figurePlacement",
+      "table-placement": "tablePlacement",
+      "word-count-validation": "wordCountValidation",
       "title-comparison": "titleComparison",
     };
 

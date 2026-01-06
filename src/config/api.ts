@@ -28,68 +28,80 @@ export const API_ENDPOINTS = {
 
   // Format Comparison
   formatComparison: {
-    pdf: "/pdf/format-compare/",
-    docx: "/docx/format-compare/",
+    pdf: "/format/compare/",
+    docx: "/format/compare/",
   },
 
   // Google Validation
   googleValidation: {
-    pdf: "/pdf/google-validate/",
-    docx: "/docx/google-validate/",
+    pdf: "/validate-google-search/",
+    docx: "/validate-google-search/",
   },
 
   // Visual Validation
   visualValidation: {
-    pdf: "/pdf/visual-validate/",
-    docx: "/docx/visual-validate/",
+    pdf: "/visuals/validate/",
+    docx: "/visuals/validate/",
   },
 
   // Visual Comparison
   visualComparison: {
-    pdf: "/pdf/visual-compare/",
-    docx: "/docx/visual-compare/",
+    pdf: "/visual/compare/",
+    docx: "/visual/compare/",
   },
 
   // AI Math Validation
   aiMathValidation: {
-    pdf: "/pdf/ai-math-validate/",
-    docx: "/docx/ai-math-validate/",
+    pdf: "/validate-math-gemini/",
+    docx: "/validate-math-gemini/",
   },
 
   // Reference Validation
   referenceValidation: {
-    pdf: "/pdf/reference-validate/",
-    docx: "/docx/reference-validate/",
+    pdf: "/reference/validate/",
+    docx: "/reference/validate/",
   },
 
   // Code Validation
   codeValidation: {
-    pdf: "/pdf/code-validate/",
-    docx: "/docx/code-validate/",
+    pdf: "/validate-code/",
+    docx: "/validate-code/",
   },
 
   // Accessibility Validation
   accessibilityValidation: {
-    pdf: "/pdf/accessibility-validate/",
-    docx: "/docx/accessibility-validate/",
+    pdf: "/accessibility/validate/",
+    docx: "/accessibility/validate/",
   },
 
   // Figure Placement
   figurePlacement: {
-    pdf: "/pdf/figure-placement/",
-    docx: "/docx/figure-placement/",
+    pdf: "/figure-placement/validate/",
+    docx: "/figure-placement/validate/",
+  },
+
+  // Table Placement
+  tablePlacement: {
+    pdf: "/table-placement/validate/",
+    docx: "/table-placement/validate/",
   },
 
   // Title Comparison
   titleComparison: {
-    pdf: "/pdf/title-compare/",
-    docx: "/docx/title-compare/",
+    pdf: "/title/compare/",
+    docx: "/title/compare/",
+  },
+
+  // Word Count Validation
+  wordCountValidation: {
+    pdf: "/word-count/validate/",
+    docx: "/word-count/validate/",
   },
 
   // Generate Report
   generateReport: {
-    pdf: "/pdf/generate-report/",
-    docx: "/docx/generate-report/",
+    pdf: "/report/generate/",
+    docx: "/report/generate/",
   },
 };
 
