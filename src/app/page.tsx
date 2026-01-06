@@ -4,113 +4,25 @@ import React, { useState } from "react";
 import { Header } from "@/components/common/Header";
 import { FileTypeToggle } from "@/components/common/FileTypeToggle";
 import { UploadSection } from "@/components/audit/UploadSection";
-import { ResultsTable } from "@/components/audit/ResultsTable";
+import { AuditTable } from "@/components/audit/AuditTable";
 import { useAuditStore } from "@/hooks/useAuditStore";
-import { apiService } from "@/services/api.service";
-import { FileKey, FileType } from "@/types";
+import { FileType } from "@/types";
 
 export default function Home() {
   const {
     currentFileType,
-    files,
-    results,
+    setFileType,
     isLoading,
     error,
-    setFileType,
-    setFile,
-    setResult,
-    setLoading,
-    setError,
+    files,
+    results
   } = useAuditStore();
-
+  
   const [showResults, setShowResults] = useState(false);
 
-  const handleFileSelect = (key: FileKey, file: File) => {
-    setFile(key, {
-      name: file.name,
-      size: file.size,
-      type: currentFileType,
-      file,
-    });
-  };
-
-  const handleRunTask = async (taskId: string) => {
-    try {
-      setLoading(true);
-      setError(null);
-
-      const fileKeys: FileKey[] = ["ce1", "ce2", "ce3", "rw"];
-      const filesToProcess: Record<string, File> = {};
-
-      for (const key of fileKeys) {
-        if (files[key]?.file) {
-          filesToProcess[key] = files[key].file!;
-        }
-      }
-
-      if (Object.keys(filesToProcess).length === 0) {
-        setError("Please upload at least one file");
-        setLoading(false);
-        return;
-      }
-
-      const results = await apiService.runMultipleValidations(
-        filesToProcess,
-        taskId,
-        currentFileType
-      );
-
-      for (const [key, result] of Object.entries(results)) {
-        setResult(taskId, key as FileKey, {
-          success: result.success !== false,
-          status:
-            result.success === false
-              ? "fail"
-              : result.success
-                ? "pass"
-                : "pending",
-          details: result,
-        });
-      }
-
-      setShowResults(true);
-    } catch (err) {
-      const message = err instanceof Error ? err.message : "An error occurred";
-      setError(message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleGenerateReport = async (key: FileKey) => {
-    try {
-      if (!files[key]?.file) {
-        setError(`No file uploaded for ${key.toUpperCase()}`);
-        return;
-      }
-
-      setLoading(true);
-      const blob = await apiService.generateReport(
-        files[key].file!,
-        currentFileType
-      );
-
-      // Trigger download
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `report-${key}-${Date.now()}.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-    } catch (err) {
-      const message = err instanceof Error ? err.message : "Failed to generate report";
-      setError(message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const hasFiles = Object.values(files).some(f => f !== null);
+  // Also show results if we have any results
+  const hasResults = Object.keys(results).length > 0;
 
   return (
     <main className="app-container">
@@ -139,24 +51,15 @@ export default function Home() {
       )}
 
       {/* Upload Section */}
-      <UploadSection
-        fileType={currentFileType}
-        files={files}
-        onFileSelect={handleFileSelect}
-      />
+      <UploadSection />
 
       {/* Results Section */}
-      {showResults && (
-        <ResultsTable
-          results={results}
-          onRunTask={handleRunTask}
-          onGenerateReport={handleGenerateReport}
-          isLoading={isLoading}
-        />
+      {(showResults || hasResults) && (
+        <AuditTable />
       )}
 
       {/* Show Results Button */}
-      {!showResults && Object.keys(files).some(key => files[key as FileKey]) && (
+      {(!showResults && !hasResults && hasFiles) && (
         <div style={{textAlign: 'center', marginBottom: '32px'}}>
           <button
             onClick={() => setShowResults(true)}
@@ -185,16 +88,7 @@ export default function Home() {
         </div>
       )}
 
-      {/* Loading Overlay */}
-      {isLoading && (
-        <div className="loading-overlay">
-          <div className="loading-modal">
-            <div className="spinner"></div>
-            <h3>Processing...</h3>
-            <p>Please wait while we analyze your documents.</p>
-          </div>
-        </div>
-      )}
+      {/* Loading Overlay Removed */}
     </main>
   );
 }
