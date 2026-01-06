@@ -55,7 +55,7 @@ export const useAuditStore = create<AuditStore>((set, get) => ({
     }),
 
   resetResults: () => set({ results: {} }),
-  setLoading: (loading) => set({ isLoading: loading }),
+  setLoading: (loading: boolean) => set({ isLoading: loading }),
   setError: (error) => set({ error }),
 
   runTask: async (taskKey) => {
