@@ -157,7 +157,7 @@ export const useAuditStore = create<AuditStore>((set, get) => ({
       } else {
           // STANDARD TASKS
           const entries = Object.entries(files).filter(
-            ([, file]) => file !== null && file.file
+            ([key, file]) => file !== null && file.file && key !== 'rw'
           ) as [string, UploadedFile][];
 
           const promises = entries.map(async ([key, uploadedFile]) => {
@@ -192,6 +192,8 @@ export const useAuditStore = create<AuditStore>((set, get) => ({
   },
 
   generateReport: async (key: FileKey, action: 'view' | 'download' = 'view') => {
+      if (key === 'rw') return; // Skip source file
+      
       const { files, currentFileType } = get();
       const file = files[key];
       if (!file || !file.file) return;

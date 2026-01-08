@@ -12,7 +12,7 @@ const UPLOAD_CARDS = [
   { key: "ce1" as FileKey, label: "CE1 Document", icon: "📋" },
   { key: "ce2" as FileKey, label: "CE2 Document", icon: "📋" },
   { key: "ce3" as FileKey, label: "CE3 Document", icon: "📋" },
-  { key: "rw" as FileKey, label: "RW Document", icon: "📄" },
+  { key: "rw" as FileKey, label: "Source file", icon: "📄" },
 ];
 
 export const UploadSection: React.FC = () => {
@@ -127,6 +127,7 @@ export const UploadSection: React.FC = () => {
             <input
               type="file"
               id={`${key}File`}
+              aria-label={label}
               accept={currentFileType === "pdf" ? ".pdf" : ".docx"}
               className="file-input"
               onChange={(e) => {

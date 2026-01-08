@@ -29,7 +29,7 @@ export const AuditTable: React.FC = () => {
               <th>CE1</th>
               <th>CE2</th>
               <th>CE3</th>
-              <th>RW</th>
+              <th>Source File</th>
               <th className="col-action">Action</th>
             </tr>
           </thead>
@@ -53,22 +53,26 @@ export const AuditTable: React.FC = () => {
               </td>
               {(["ce1", "ce2", "ce3", "rw"] as FileKey[]).map((key) => (
                 <td key={key} id={`report-${key}`} className="result-cell">
-                  <div style={{ display: 'flex', gap: '4px', justifyContent: 'center' }}>
-                    <button 
-                      className="sm-btn" 
-                      onClick={() => generateReport(key, 'view')}
-                      title="View in Browser"
-                    >
-                      View
-                    </button>
-                    <button 
-                      className="sm-btn" 
-                      onClick={() => generateReport(key, 'download')}
-                      title="Download HTML"
-                    >
-                      <i className="ph ph-download-simple"></i>
-                    </button>
-                  </div>
+                  {key !== "rw" ? (
+                    <div style={{ display: 'flex', gap: '4px', justifyContent: 'center' }}>
+                      <button 
+                        className="sm-btn" 
+                        onClick={() => generateReport(key, 'view')}
+                        title="View in Browser"
+                      >
+                        View
+                      </button>
+                      <button 
+                        className="sm-btn" 
+                        onClick={() => generateReport(key, 'download')}
+                        title="Download HTML"
+                      >
+                        <i className="ph ph-download-simple"></i>
+                      </button>
+                    </div>
+                  ) : (
+                    <span style={{ color: "#aaa" }}>-</span>
+                  )}
                 </td>
               ))}
               <td className="action-cell">
