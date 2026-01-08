@@ -22,7 +22,7 @@ export const ResultBadge: React.FC<ResultBadgeProps> = ({ result }) => {
     >
       {result.status === "pass" && "Q"}
       {result.status === "fail" && "NQ"}
-      {result.status === "loading" && "⏳"}
+      {result.status === "loading" && <i className="ph ph-circle-notch animate-spin"></i>}
       {result.status === "pending" && "-"}
     </span>
   );

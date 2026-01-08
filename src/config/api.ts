@@ -3,9 +3,11 @@
  * Centralized API endpoint management
  */
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
-  "https://quality-audit-api-production.up.railway.app/api/documents";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
+
+if (!API_BASE_URL) {
+  console.warn("WARNING: NEXT_PUBLIC_API_URL is not defined in the environment.");
+}
 
 export const API_ENDPOINTS = {
   // Grammar Check
