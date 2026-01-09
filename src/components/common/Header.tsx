@@ -4,7 +4,6 @@
  */
 
 import React from "react";
-import Link from "next/link";
 
 interface HeaderProps {
   showNav?: boolean;
@@ -14,6 +13,13 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ showNav = true, backLink }) => {
   return (
     <header className="main-header">
+      {backLink && (
+        <a href={backLink} className="back-btn">
+          <i className="ph ph-arrow-left"></i>
+          <span>Back to Audit</span>
+        </a>
+      )}
+
       <div className="header-content">
         <div className="logo-area">
           <i className="ph ph-clipboard-text"></i>
@@ -39,13 +45,6 @@ export const Header: React.FC<HeaderProps> = ({ showNav = true, backLink }) => {
               <span>CPD CV Compare</span>
             </a>
           </>
-        )}
-
-        {backLink && (
-          <a href={backLink} className="comparison-link">
-            <i className="ph ph-arrow-left"></i>
-            <span>Back to Audit</span>
-          </a>
         )}
       </div>
     </header>

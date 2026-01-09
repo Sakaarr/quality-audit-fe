@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import axios from "axios";
+import { Header } from "@/components/common/Header";
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL ||
@@ -139,15 +140,7 @@ export default function CPDCVPage() {
   return (
     <div className="app-container">
       {/* Header */}
-      <header className="main-header">
-        <div className="header-content">
-          <div className="logo-area">
-            <i className="fa-solid fa-graduation-cap"></i>
-            <h1>Academic Qualification Auditor</h1>
-          </div>
-          <p className="subtitle">Upload documents to verify CPD against CV records</p>
-        </div>
-      </header>
+      <Header backLink="/" />
 
       {/* Upload Form */}
       {!result && (
