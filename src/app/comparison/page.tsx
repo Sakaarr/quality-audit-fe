@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { Header } from "@/components/common/Header";
 import { FileTypeToggle } from "@/components/common/FileTypeToggle";
 import { FileType, UploadedFile } from "@/types";
 import { apiService } from "@/services/api.service";
@@ -180,18 +181,7 @@ export default function ComparisonPage() {
       {/* Grain Overlay */}
       <div className="grain-overlay"></div>
 
-      {/* Top Navigation */}
-      <nav className="top-nav">
-        <a href="/" className="nav-link">
-          <i className="ph ph-arrow-left"></i>
-          <span>Back to Audit</span>
-        </a>
-        <div className="nav-title">
-          <i className="ph ph-git-diff"></i>
-          Source Comparison
-        </div>
-        <div className="nav-spacer"></div>
-      </nav>
+      <Header backLink="/" />
 
       <main className="main-container">
         {/* Hero Section */}
