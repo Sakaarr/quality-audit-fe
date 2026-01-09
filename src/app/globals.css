@@ -110,8 +110,13 @@ body {
 
 .subtitle {
   color: var(--text-muted);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 400;
+}
+ pocket-glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Header Actions */
@@ -133,11 +138,11 @@ body {
   font-weight: 600;
   transition: all 0.3s ease;
   box-shadow: var(--shadow-sm);
-  border: 1px solid rgba(6, 182, 212, 0.2);
+  border: 1px solid rgba(164, 4, 247, 0.2);
 }
 
 .comparison-link:hover {
-  background: rgba(6, 182, 212, 0.1);
+  background: rgba(164, 4, 247, 0.05);
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
   border-color: var(--primary);
@@ -210,73 +215,69 @@ body {
 /* Upload Cards */
 .upload-card {
   position: relative;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-radius: var(--radius-lg);
   padding: 32px 24px;
-  border: 1px solid rgba(164, 4, 247, 0.05);
+  border: 1px solid rgba(164, 4, 247, 0.1);
   box-shadow: var(--shadow-sm);
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   cursor: pointer;
+  overflow: hidden;
 }
 
 .upload-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-lg);
-  border-color: rgba(164, 4, 247, 0.2);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
+  border-color: rgba(164, 4, 247, 0.3);
+  background: rgba(255, 255, 255, 0.9);
 }
 
-.upload-card:hover .card-status-indicator {
-  background: var(--primary);
-  box-shadow: 0 0 12px rgba(164, 4, 247, 0.4);
+.upload-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-light), var(--primary), var(--primary-dark));
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.upload-card:nth-child(1):hover {
-  box-shadow: 0 12px 24px -8px rgba(164, 4, 247, 0.2);
+.upload-card:hover::before {
+  opacity: 1;
 }
 
-.upload-card:nth-child(2):hover {
-  box-shadow: 0 12px 24px -8px rgba(123, 134, 152, 0.2);
+.upload-card.drag-over {
+  border-color: var(--primary);
+  background: rgba(164, 4, 247, 0.05);
+  transform: translateY(-8px) scale(1.04);
+  box-shadow: 0 0 32px rgba(164, 4, 247, 0.2);
 }
 
-.upload-card:nth-child(3):hover {
-  box-shadow: 0 12px 24px -8px rgba(14, 158, 73, 0.2);
-}
-
-.upload-card:nth-child(4):hover {
-  box-shadow: 0 12px 24px -8px rgba(198, 54, 23, 0.2);
+.upload-card.drag-over .icon-wrapper {
+  transform: scale(1.2) rotate(-5deg);
+  background: var(--primary-light);
 }
 
 .card-status-indicator {
   position: absolute;
   top: 16px;
   right: 16px;
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background: #CBD5E1;
+  background: var(--grey-200);
   transition: all 0.3s ease;
+  border: 2px solid white;
 }
 
-.upload-card:nth-child(1):hover .card-status-indicator {
+.upload-card:hover .card-status-indicator {
   background: var(--primary);
-  box-shadow: 0 0 12px rgba(6, 182, 212, 0.5);
-}
-
-.upload-card:nth-child(2):hover .card-status-indicator {
-  background: var(--info);
-  box-shadow: 0 0 12px rgba(59, 130, 246, 0.5);
-}
-
-.upload-card:nth-child(3):hover .card-status-indicator {
-  background: var(--secondary);
-  box-shadow: 0 0 12px rgba(16, 185, 129, 0.5);
-}
-
-.upload-card:nth-child(4):hover .card-status-indicator {
-  background: var(--accent);
-  box-shadow: 0 0 12px rgba(249, 115, 22, 0.5);
+  box-shadow: 0 0 12px var(--primary-light);
+  transform: scale(1.2);
 }
 
 .card-content {
@@ -285,30 +286,21 @@ body {
 }
 
 .icon-wrapper {
-  width: 64px;
-  height: 64px;
-  border-radius: var(--radius-md);
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 16px;
-  box-shadow: var(--shadow-sm);
+  margin: 0 auto 20px;
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+  box-shadow: 0 8px 16px rgba(164, 4, 247, 0.15);
+  transition: all 0.3s ease;
 }
 
-.upload-card:nth-child(1) .icon-wrapper {
-  background: linear-gradient(135deg, #bc47ff 0%, #a404f7 100%);
-}
-
-.upload-card:nth-child(2) .icon-wrapper {
-  background: linear-gradient(135deg, #A7B2C3 0%, #7B8698 100%);
-}
-
-.upload-card:nth-child(3) .icon-wrapper {
-  background: linear-gradient(135deg, #34D399 0%, #0E9E49 100%);
-}
-
-.upload-card:nth-child(4) .icon-wrapper {
-  background: linear-gradient(135deg, #f43f5e 0%, #C63617 100%);
+.upload-card:hover .icon-wrapper {
+  transform: rotate(10deg) scale(1.1);
+  box-shadow: 0 12px 20px rgba(164, 4, 247, 0.25);
 }
 
 .icon-wrapper i {
@@ -326,6 +318,23 @@ body {
 .file-name {
   color: var(--text-muted);
   font-size: 14px;
+  font-weight: 500;
+  margin-top: 4px;
+  padding: 4px 8px;
+  background: var(--grey-50);
+  border-radius: var(--radius-sm);
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border: 1px dashed var(--grey-200);
+}
+
+.upload-card:hover .file-name {
+  border-color: var(--primary-light);
+  background: white;
+  color: var(--primary);
 }
 
 /* File Input */
@@ -440,7 +449,7 @@ body {
 }
 
 .results-table tbody tr:hover {
-  background: rgba(6, 182, 212, 0.05);
+  background: rgba(164, 4, 247, 0.03);
 }
 
 .results-table tbody td {
@@ -522,7 +531,7 @@ body {
 
 .run-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(6, 182, 212, 0.3);
+  box-shadow: 0 4px 16px rgba(164, 4, 247, 0.3);
 }
 
 .run-btn:disabled {
